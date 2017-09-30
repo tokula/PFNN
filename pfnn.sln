@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PFNN.SharpDX", "PFNN.SharpDX\PFNN.SharpDX.csproj", "{4DA92D1F-F198-44A1-BF7D-C4044F0A3195}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PFNN.SharpHelper", "PFNN.SharpHelper\PFNN.SharpHelper.csproj", "{7D87352E-BDD4-4EED-A041-73BCA52D33FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4DA92D1F-F198-44A1-BF7D-C4044F0A3195}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DA92D1F-F198-44A1-BF7D-C4044F0A3195}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DA92D1F-F198-44A1-BF7D-C4044F0A3195}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DA92D1F-F198-44A1-BF7D-C4044F0A3195}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D87352E-BDD4-4EED-A041-73BCA52D33FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D87352E-BDD4-4EED-A041-73BCA52D33FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D87352E-BDD4-4EED-A041-73BCA52D33FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D87352E-BDD4-4EED-A041-73BCA52D33FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {30E9D535-D272-4AF8-816E-4CA383E90571}
+	EndGlobalSection
+EndGlobal
