@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Heightmaps\Heightmap.cs" />
+    <Compile Include="Classes\Helpers\ShapeModelHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -99,12 +100,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Basic.hlsl" />
-    <Content Include="BasicSkin.hlsl" />
+    <Content Include="BasicColor.hlsl" />
+    <Content Include="BasicTexture.hlsl" />
+    <Content Include="BasicTextureSkin.hlsl" />
     <Content Include="Content\Heightmaps\hmap_000_smooth.txt" />
     <Content Include="Content\Heightmaps\hmap_000_smooth_ao.txt" />
     <Content Include="Content\Heightmaps\hmap_004_smooth.txt" />
     <Content Include="Content\Heightmaps\hmap_004_smooth_ao.txt" />
+    <Content Include="Content\Heightmaps\hmap_004_smooth_ao_new.xml" />
     <Content Include="Content\Heightmaps\hmap_007_smooth.txt" />
     <Content Include="Content\Heightmaps\hmap_007_smooth_ao.txt" />
     <Content Include="Content\Heightmaps\hmap_013_smooth.txt" />

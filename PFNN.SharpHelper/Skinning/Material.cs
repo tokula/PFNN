@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using SharpDX;
 using SharpDX.Direct3D11;
 using System.IO;
+using PFNN.SharpHelper.ModelData;
 
 namespace SharpHelper.Skinning
 {

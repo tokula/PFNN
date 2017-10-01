@@ -8,6 +8,9 @@ using SharpDX;
 using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using Buffer11 = SharpDX.Direct3D11.Buffer;
+using PFNN.SharpHelper.ModelData;
+using PFNN.SharpDX.Classes.VertexFormat;
+using PFNN.SharpHelper.VertexFormat;
 
 namespace SharpHelper.Skinning
 {
@@ -32,7 +35,7 @@ namespace SharpHelper.Skinning
     /// <summary>
     /// Mesh for Skinning Rendering
     /// </summary>
-    public class Geometry : IDisposable
+    public class Geometry : IVertexFormatHandler, IDisposable
     {
         private Buffer11 transformBuffer;
         private Buffer11 paletteBuffer;
@@ -94,7 +97,7 @@ namespace SharpHelper.Skinning
             this.Device = device;
 
             //Data
-            List<VertexFormat> vertices = new List<VertexFormat>(data.Vertices);
+            var vertices = new List<SkinnedVertexFormat>(data.Vertices);
 
             List<int> indices = new List<int>(data.Indices);
 
@@ -102,7 +105,7 @@ namespace SharpHelper.Skinning
             IndexCount = indices.Count;
 
             //Vertex Buffer
-            VertexBuffer = SharpDX.Direct3D11.Buffer.Create<VertexFormat>(Device.Device, BindFlags.VertexBuffer, vertices.ToArray());
+            VertexBuffer = SharpDX.Direct3D11.Buffer.Create<SkinnedVertexFormat>(Device.Device, BindFlags.VertexBuffer, vertices.ToArray());
 
             //Index Buffer
             IndexBuffer = SharpDX.Direct3D11.Buffer.Create<int>(Device.Device, BindFlags.IndexBuffer, indices.ToArray());
@@ -163,7 +166,7 @@ namespace SharpHelper.Skinning
         internal void Draw(DeviceContext context)
         {
             context.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleList;
-            context.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(VertexBuffer, VertexFormat.Size, 0));
+            context.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(VertexBuffer, SkinnedVertexFormat.Size, 0));
             context.InputAssembler.SetIndexBuffer(IndexBuffer, SharpDX.DXGI.Format.R32_UInt, 0);
             context.DrawIndexed(IndexCount, 0, 0);
         }

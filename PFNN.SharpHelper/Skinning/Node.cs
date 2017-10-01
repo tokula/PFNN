@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SharpDX;
+using PFNN.SharpHelper.ModelData;
 
 namespace SharpHelper.Skinning
 {

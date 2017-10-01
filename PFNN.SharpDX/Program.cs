@@ -60,14 +60,14 @@ namespace PFNN.SharpDX
                     new InputElement("WEIGHT", 0, Format.R32G32B32A32_Float, 72, 0),
                 };
 
-                var staticShader = new SharpShader(device, "../../Basic.hlsl",
+                var staticShader = new SharpShader(device, "../../BasicTexture.hlsl",
                     new SharpShaderDescription()
                     {
                         VertexShaderFunction = "VSMain",
                         PixelShaderFunction = "PSMain"
                     }, description);
 
-                var skinShader = new SharpShader(device, "../../BasicSkin.hlsl",
+                var skinShader = new SharpShader(device, "../../BasicTextureSkin.hlsl",
                     new SharpShaderDescription()
                     {
                         VertexShaderFunction = "VSMain",

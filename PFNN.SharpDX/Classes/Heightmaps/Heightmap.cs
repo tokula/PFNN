@@ -1,4 +1,6 @@
-﻿using SharpDX;
+﻿using PFNN.SharpDX.Classes.VertexFormat;
+using PFNN.SharpHelper.ModelData;
+using SharpDX;
 using SharpHelper.Skinning;
 using System;
 using System.Collections.Generic;
@@ -188,7 +190,7 @@ namespace PFNN.SharpDX.Classes.Heightmaps
 #else
             var tbo_data = new UInt32[3 * 2 * ((w - 1) / 2) * ((h - 1) / 2)];
 #endif
-            var vertices = new List<VertexFormat>();
+            var vertices = new List<SkinnedVertexFormat>();
 
             for (int x = 0; x < w; x++)
                 for (int y = 0; y < h; y++)
@@ -201,7 +203,7 @@ namespace PFNN.SharpDX.Classes.Heightmaps
                     vbo_data[x * 7 + y * 7 * w + 5] = norms[x + y * w].Z;
                     vbo_data[x * 7 + y * 7 * w + 6] = aos[x + y * w];
 
-                    vertices.Add(new VertexFormat()
+                    vertices.Add(new SkinnedVertexFormat()
                     {
                         Position = new Vector3(posns[x + y * w].X, posns[x + y * w].Y, posns[x + y * w].Z),
                         Normal = new Vector3(norms[x + y * w].X, norms[x + y * w].Y, norms[x + y * w].Z)

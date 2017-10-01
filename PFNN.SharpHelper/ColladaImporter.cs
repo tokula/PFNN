@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using SharpDX;
 using SharpHelper.Skinning;
+using PFNN.SharpHelper.ModelData;
+using PFNN.SharpDX.Classes.VertexFormat;
 
 namespace SharpHelper
 {
@@ -326,7 +328,7 @@ namespace SharpHelper
             int k = 0;
             while (k < indices.Count)
             {
-                VertexFormat v = new VertexFormat();
+                var v = new SkinnedVertexFormat();
 
                 foreach (ChannelData e in inputData)
                 {
