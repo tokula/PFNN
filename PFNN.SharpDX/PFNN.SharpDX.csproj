@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Heightmaps\Heightmap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -81,7 +82,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="Models\Troll\troll.DAE" />
+    <Compile Include="Classes\Helpers\Helper.cs" />
+    <None Include="Content\Models\Troll\troll.DAE" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -99,16 +101,26 @@
   <ItemGroup>
     <Content Include="Basic.hlsl" />
     <Content Include="BasicSkin.hlsl" />
-    <Content Include="Models\Troll\Troltooth_arms_Diffuse_3.JPG" />
-    <Content Include="Models\Troll\Troltooth_arms_Diffuse_3N.dds" />
-    <Content Include="Models\Troll\Troltooth_Club_diffuse_1.JPG" />
-    <Content Include="Models\Troll\Troltooth_Club_diffuse_1N.dds" />
-    <Content Include="Models\Troll\troltooth_head_diffuse_5.JPG" />
-    <Content Include="Models\Troll\troltooth_head_diffuse_5N.dds" />
-    <Content Include="Models\Troll\Troltooth_Legs_diffuse_2.JPG" />
-    <Content Include="Models\Troll\Troltooth_Legs_diffuse_2N.dds" />
-    <Content Include="Models\Troll\troltooth_torso_diffuse_1.JPG" />
-    <Content Include="Models\Troll\troltooth_torso_diffuse_1N.dds" />
+    <Content Include="Content\Heightmaps\hmap_000_smooth.txt" />
+    <Content Include="Content\Heightmaps\hmap_000_smooth_ao.txt" />
+    <Content Include="Content\Heightmaps\hmap_004_smooth.txt" />
+    <Content Include="Content\Heightmaps\hmap_004_smooth_ao.txt" />
+    <Content Include="Content\Heightmaps\hmap_007_smooth.txt" />
+    <Content Include="Content\Heightmaps\hmap_007_smooth_ao.txt" />
+    <Content Include="Content\Heightmaps\hmap_013_smooth.txt" />
+    <Content Include="Content\Heightmaps\hmap_013_smooth_ao.txt" />
+    <Content Include="Content\Heightmaps\hmap_urban_001_smooth.txt" />
+    <Content Include="Content\Heightmaps\hmap_urban_001_smooth_ao.txt" />
+    <Content Include="Content\Models\Troll\Troltooth_arms_Diffuse_3.JPG" />
+    <Content Include="Content\Models\Troll\Troltooth_arms_Diffuse_3N.dds" />
+    <Content Include="Content\Models\Troll\Troltooth_Club_diffuse_1.JPG" />
+    <Content Include="Content\Models\Troll\Troltooth_Club_diffuse_1N.dds" />
+    <Content Include="Content\Models\Troll\troltooth_head_diffuse_5.JPG" />
+    <Content Include="Content\Models\Troll\troltooth_head_diffuse_5N.dds" />
+    <Content Include="Content\Models\Troll\Troltooth_Legs_diffuse_2.JPG" />
+    <Content Include="Content\Models\Troll\Troltooth_Legs_diffuse_2N.dds" />
+    <Content Include="Content\Models\Troll\troltooth_torso_diffuse_1.JPG" />
+    <Content Include="Content\Models\Troll\troltooth_torso_diffuse_1N.dds" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PFNN.SharpHelper\PFNN.SharpHelper.csproj">

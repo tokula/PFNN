@@ -20,7 +20,7 @@ namespace SharpHelper.Skinning
         /// <summary>
         /// Transform matrix
         /// </summary>
-        public Matrix Trasform;
+        public Matrix Transform;
 
         /// <summary>
         /// World Matrix
@@ -128,7 +128,7 @@ namespace SharpHelper.Skinning
             {
                 SkinShaderInformation info = new SkinShaderInformation();
                 info.World = Node.PreComputed * information.World;
-                info.Trasform = information.Trasform;
+                info.Transform = information.Transform;
 
                 Device.DeviceContext.UpdateSubresource(ref info, transformBuffer);
                 Device.DeviceContext.VertexShader.SetConstantBuffer(0, transformBuffer);
@@ -146,7 +146,7 @@ namespace SharpHelper.Skinning
                 SkinShaderInformation info = new SkinShaderInformation();
 
                 info.World = currentMat * information.World;
-                info.Trasform = currentMat * information.Trasform;
+                info.Transform = currentMat * information.Transform;
 
                 Device.DeviceContext.UpdateSubresource(ref info, transformBuffer);
                 Device.DeviceContext.VertexShader.SetConstantBuffer(0, transformBuffer);

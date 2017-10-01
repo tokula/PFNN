@@ -11,6 +11,7 @@ using SharpDX.Windows;
 using SharpHelper;
 using SharpHelper.Skinning;
 using Buffer11 = SharpDX.Direct3D11.Buffer;
+using PFNN.SharpDX.Classes.Heightmaps;
 
 namespace PFNN.SharpDX
 {
@@ -39,7 +40,7 @@ namespace PFNN.SharpDX
 
             //render form
             RenderForm form = new RenderForm();
-            form.Text = "Tutorial 18: Skin Animation";
+            form.Text = "PFNN";
             SharpFPS fpsCounter = new SharpFPS();
 
             //number of cube
@@ -48,25 +49,25 @@ namespace PFNN.SharpDX
             using (SharpDevice device = new SharpDevice(form))
             {
                 //Input layout for Skinning Mesh
-                InputElement[] description = new InputElement[]
+                var description = new InputElement[]
                 {
-                    new InputElement("POSITION",0, Format.R32G32B32_Float,0,0),
-                    new InputElement("NORMAL",0, Format.R32G32B32_Float,12,0),
-                    new InputElement("TEXCOORD",0, Format.R32G32_Float,24,0),
-                    new InputElement("BINORMAL",0, Format.R32G32B32_Float,32,0),
-                    new InputElement("TANGENT",0, Format.R32G32B32_Float,44,0),
-                    new InputElement("JOINT",0, Format.R32G32B32A32_Float,56,0),
-                    new InputElement("WEIGHT",0, Format.R32G32B32A32_Float,72,0),
+                    new InputElement("POSITION", 0, Format.R32G32B32_Float, 0, 0),
+                    new InputElement("NORMAL", 0, Format.R32G32B32_Float, 12, 0),
+                    new InputElement("TEXCOORD", 0, Format.R32G32_Float, 24, 0),
+                    new InputElement("BINORMAL", 0, Format.R32G32B32_Float, 32, 0),
+                    new InputElement("TANGENT", 0, Format.R32G32B32_Float, 44, 0),
+                    new InputElement("JOINT", 0, Format.R32G32B32A32_Float, 56, 0),
+                    new InputElement("WEIGHT", 0, Format.R32G32B32A32_Float, 72, 0),
                 };
 
-                SharpShader staticShader = new SharpShader(device, "../../Basic.hlsl",
+                var staticShader = new SharpShader(device, "../../Basic.hlsl",
                     new SharpShaderDescription()
                     {
                         VertexShaderFunction = "VSMain",
                         PixelShaderFunction = "PSMain"
                     }, description);
 
-                SharpShader skinShader = new SharpShader(device, "../../BasicSkin.hlsl",
+                var skinShader = new SharpShader(device, "../../BasicSkin.hlsl",
                     new SharpShaderDescription()
                     {
                         VertexShaderFunction = "VSMain",
@@ -74,29 +75,27 @@ namespace PFNN.SharpDX
                     }, description);
 
 
-                Buffer11 lightBuffer = skinShader.CreateBuffer<Vector4>();
+                var lightBuffer = skinShader.CreateBuffer<Vector4>();
 
-                string path = @"../../Models/Troll/";
+                // string pathHeightmap = @"../../Content/Heightmaps/";
+                // var heigthMap = Heightmap.Load(pathHeightmap + "hmap_004_smooth");
+                // var model = new SharpModel(device, ColladaImporter.Import(path + "troll.dae"), staticShader, skinShader, path);
+                // model = new SharpModel(device, heigthMap.GetModelData());
 
-                SharpModel model = new SharpModel(device,
-                    ColladaImporter.Import(path + "troll.dae"));
+                string path = @"../../Content/Models/Troll/";
 
-                foreach (Geometry g in model.Geometries)
-                {
-                    if (g.IsAnimated)
-                        g.Shader = skinShader;
-                    else
-                        g.Shader = staticShader;
 
-                    if (!string.IsNullOrEmpty(g.Material.DiffuseTextureName))
+                var models = new List<SharpModel>();
+
+                models.Add(new SharpModel(device, ColladaImporter.Import(path + "troll.dae"), staticShader, skinShader, path)
                     {
-                        g.Material.DiffuseTexture = device.LoadTextureFromFile(path + g.Material.DiffuseTextureName);
+                        Postion = new Vector3(100, 0, 0)
+                    });
 
-                        g.Material.NormalTextureName = Path.GetFileNameWithoutExtension(g.Material.DiffuseTextureName) + "N.dds";
-
-                        g.Material.NormalTexture = device.LoadTextureFromFile(path + g.Material.NormalTextureName);
-                    }
-                }
+                models.Add(new SharpModel(device, ColladaImporter.Import(path + "troll.dae"), staticShader, skinShader, path)
+                    {
+                        Postion = new Vector3(-100, 0, 0)
+                    });
 
                 fpsCounter.Reset();
 
@@ -117,29 +116,27 @@ namespace PFNN.SharpDX
 
                 int lastTick = Environment.TickCount;
 
-                //main loop
+                // Main loop
                 RenderLoop.Run(form, () =>
                 {
-                    //Resizing
+                    // Resizing
                     if (device.MustResize)
                     {
                         device.Resize();
                     }
 
-
-                    //apply state
+                    // Apply state
                     device.UpdateAllStates();
 
-                    //clear color
+                    // Clear color
                     device.Clear(Color.CornflowerBlue);
 
 
-
-                    //set transformation matrix
+                    // Set transformation matrix
                     float ratio = (float)form.ClientRectangle.Width / (float)form.ClientRectangle.Height;
                     Matrix projection = Matrix.PerspectiveFovLH(3.14F / 3.0F, ratio, 1, 10000);
-                    Matrix view = Matrix.LookAtLH(new Vector3(0, -100, 50), new Vector3(0, 0, 50), Vector3.UnitZ);
-                    Matrix world = Matrix.Identity;
+                    Matrix view = Matrix.LookAtLH(new Vector3(0, -300, 50), new Vector3(0, 0, 50), Vector3.UnitZ);
+                    
 
                     float angle = Environment.TickCount / 2000.0F;
                     Vector3 light = new Vector3((float)Math.Sin(angle), (float)Math.Cos(angle), 0);
@@ -147,36 +144,39 @@ namespace PFNN.SharpDX
                     device.UpdateData<Vector4>(lightBuffer, new Vector4(light, 1));
                     device.DeviceContext.VertexShader.SetConstantBuffer(2, lightBuffer);
 
+                    foreach (var model in models)
+	                {
+                        float animationTime = (Environment.TickCount - lastTick) / 1000.0F;
 
+                        if (model.Animations.Any() && animationTime >= model.Animations.First().Duration)
+                        {
+                            lastTick = Environment.TickCount;
+                            animationTime = 0;
+                        }
 
-                    float animationTime = (Environment.TickCount - lastTick) / 1000.0F;
+                        model.SetTime(animationTime);
 
-                    if (animationTime >= model.Animations.First().Duration)
-                    {
-                        lastTick = Environment.TickCount;
-                        animationTime = 0;
-                    }
-
-                    model.SetTime(animationTime);
-
-                    model.Draw(device, new SkinShaderInformation()
-                    {
-                        Trasform = world * view * projection,
-                        World = world
-                    });
+                        model.Draw(device, new SkinShaderInformation()
+                        {
+                            Transform = model.World * view * projection,
+                            World = model.World
+                        });
+	                }
 
                     device.Font.Begin();
 
-                    //draw string
+                    // Draw string
                     fpsCounter.Update();
                     device.Font.DrawString("FPS: " + fpsCounter.FPS, 0, 0);
                     device.Font.DrawString("Skinning Animation With Collada", 0, 30);
-
-                    //flush text to view
+                    device.Font.DrawString("Count: " + count, 0, 60);
+                    device.Font.DrawString("Environment.TickCount: " + Environment.TickCount, 0, 90);
+                    
+                    // Flush text to view
                     device.Font.End();
-                    //present
+                    
+                    // Present
                     device.Present();
-
 
                 });
 

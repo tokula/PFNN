@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SharpDX;
-
+using System.IO;
 
 namespace SharpHelper.Skinning
 {
@@ -38,13 +38,19 @@ namespace SharpHelper.Skinning
         /// </summary>
         public List<AnimationManager> Animations { get; private set; }
 
+        /// <summary>
+        /// Position
+        /// </summary>
+        public Vector3 Postion { get; set; }
+
+        public Matrix World {get { return Matrix.Identity *  Matrix.Translation(Postion); }}
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="device">Device</param>
         /// <param name="model">Model Data</param>
-        public SharpModel(SharpDevice device, ModelData model)
+        public SharpModel(SharpDevice device, ModelData model, SharpShader staticShader, SharpShader skinShader, string path)
         {
             this.Name = model.Name;
             this.Device = device;
@@ -59,16 +65,32 @@ namespace SharpHelper.Skinning
                 Children.Add(c);
             }
 
-            //Animations
+            // Animations
             Animations = new List<AnimationManager>();
             foreach (Animation anim in model.Animations)
             {
-                //carica le animazioni
                 Animations.Add(new AnimationManager(anim));
             }
 
             Initialize();
             SetTime(0);
+
+            foreach (Geometry g in this.Geometries)
+                {
+                    if (g.IsAnimated)
+                        g.Shader = skinShader;
+                    else
+                        g.Shader = staticShader;
+
+                    if (!string.IsNullOrEmpty(g.Material.DiffuseTextureName))
+                    {
+                        g.Material.DiffuseTexture = device.LoadTextureFromFile(path + g.Material.DiffuseTextureName);
+
+                        g.Material.NormalTextureName = Path.GetFileNameWithoutExtension(g.Material.DiffuseTextureName) + "N.dds";
+
+                        g.Material.NormalTexture = device.LoadTextureFromFile(path + g.Material.NormalTextureName);
+                    }
+                }
         }
 
 
